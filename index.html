@@ -16,34 +16,32 @@ body {
   color: white;
 }
 
-/* Card becomes flex container */
+/* BIG CARD */
 .card {
-  background: rgba(255,255,255,0.08);
-  padding: 30px;
-  border-radius: 18px;
-  width: 330px;
+  background: rgba(255, 255, 255, 0.10); /* single clean color */
+  padding: 40px 30px;
+  border-radius: 22px;
+  width: 90%;
+  max-width: 420px;
   min-height: 420px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.5s ease;
-}
-
-/* Center mode (after result) */
-.card.center {
   justify-content: center;
 }
 
-/* Heading */
+/* BIG HEADING */
 h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 34px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
 }
 
-/* Inputs */
+/* INPUT AREA */
 .inputs {
   width: 100%;
-  transition: all 0.6s ease;
+  transition: all 0.5s ease;
 }
 
 .inputs.hide {
@@ -52,59 +50,60 @@ h1 {
   overflow: hidden;
 }
 
-/* Inputs */
+/* BIG INPUTS */
 input {
-  width: 90%;
-  padding: 12px;
-  margin: 10px auto;
-  border-radius: 10px;
+  width: 100%;
+  padding: 16px;
+  margin: 14px 0;
+  border-radius: 14px;
   border: none;
-  font-size: 16px;
-  display: block;
+  font-size: 20px;
+  text-align: center;
 }
 
+/* BIG BUTTON */
 button {
-  width: 90%;
-  padding: 12px;
-  margin: 12px auto 0;
-  border-radius: 10px;
+  width: 100%;
+  padding: 16px;
+  margin-top: 18px;
+  border-radius: 14px;
   border: none;
   background: #22c55e;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
-  display: block;
 }
 
-/* RESULT — TRUE CENTER */
+/* BIG RESULT CENTER */
 .result {
   display: none;
-  text-align: center;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: bold;
+  text-align: center;
   line-height: 1.6;
-  animation: fadeUp 0.8s ease;
+  animation: fadeIn 0.8s ease;
 }
 
-/* Reset */
+/* SMALL RESET */
 button.reset {
   display: none;
-  margin-top: 20px;
-  padding: 6px 16px;
-  font-size: 13px;
+  margin-top: 25px;
+  padding: 8px 20px;
+  font-size: 15px;
   width: auto;
   background: #3b82f6;
+  border-radius: 12px;
 }
 
-/* Animation */
-@keyframes fadeUp {
+/* ANIMATION */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 </style>
@@ -130,14 +129,14 @@ button.reset {
 
 <script>
 function checkFlames() {
-  let boy = document.getElementById("boy").value.trim();
-  let girl = document.getElementById("girl").value.trim();
-  let resultDiv = document.getElementById("result");
-  let card = document.getElementById("card");
+  const boy = document.getElementById("boy").value.trim();
+  const girl = document.getElementById("girl").value.trim();
+  const resultDiv = document.getElementById("result");
+  const inputs = document.getElementById("inputs");
 
   if (!boy || !girl) {
     resultDiv.style.display = "block";
-    resultDiv.style.fontSize = "18px";
+    resultDiv.style.fontSize = "20px";
     resultDiv.innerText = "❗ Please enter both names";
     return;
   }
@@ -155,7 +154,7 @@ function checkFlames() {
     }
   }
 
-  let count = b.join("").length + g.join("").length;
+  const count = b.join("").length + g.join("").length;
 
   const flames = [
     "Friends 🤝",
@@ -166,11 +165,9 @@ function checkFlames() {
     "Siblings 👨‍👩‍👧‍👦"
   ];
 
-  let finalResult = flames[(count === 0 ? 0 : (count - 1) % flames.length)];
+  const finalResult = flames[(count === 0 ? 0 : (count - 1) % flames.length)];
 
-  // SWITCH TO CENTER MODE
-  document.getElementById("inputs").classList.add("hide");
-  card.classList.add("center");
+  inputs.classList.add("hide");
 
   setTimeout(() => {
     resultDiv.style.display = "block";
@@ -189,7 +186,6 @@ function resetGame() {
   document.getElementById("inputs").classList.remove("hide");
   document.getElementById("result").style.display = "none";
   document.getElementById("resetBtn").style.display = "none";
-  document.getElementById("card").classList.remove("center");
 }
 </script>
 
