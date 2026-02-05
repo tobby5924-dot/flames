@@ -5,7 +5,6 @@
 <title>FLAMES</title>
 
 <style>
-/* FULL SCREEN BASE */
 html, body {
   margin: 0;
   padding: 0;
@@ -16,7 +15,6 @@ html, body {
   color: white;
 }
 
-/* FULL PAGE CONTAINER */
 .page {
   height: 100%;
   width: 100%;
@@ -28,14 +26,12 @@ html, body {
   box-sizing: border-box;
 }
 
-/* BIG HEADING */
 h1 {
   font-size: 42px;
   margin-bottom: 40px;
   letter-spacing: 3px;
 }
 
-/* INPUT SECTION */
 .inputs {
   width: 100%;
   max-width: 500px;
@@ -48,7 +44,6 @@ h1 {
   overflow: hidden;
 }
 
-/* BIG INPUTS */
 input {
   width: 100%;
   padding: 20px;
@@ -59,7 +54,6 @@ input {
   text-align: center;
 }
 
-/* BIG BUTTON */
 button {
   width: 100%;
   padding: 20px;
@@ -72,7 +66,6 @@ button {
   cursor: pointer;
 }
 
-/* RESULT — CENTER SCREEN */
 .result {
   display: none;
   text-align: center;
@@ -82,7 +75,6 @@ button {
   animation: fadeIn 0.8s ease;
 }
 
-/* RESET BUTTON */
 .reset {
   display: none;
   margin-top: 30px;
@@ -90,9 +82,11 @@ button {
   font-size: 18px;
   border-radius: 14px;
   background: #3b82f6;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-/* ANIMATION */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -110,20 +104,16 @@ button {
 
 <div class="page">
 
-  <!-- HEADING -->
   <h1>🔥 FLAMES 🔥</h1>
 
-  <!-- INPUTS -->
   <div class="inputs" id="inputs">
     <input id="boy" placeholder="Boy Name">
     <input id="girl" placeholder="Girl Name">
     <button onclick="checkFlames()">Check</button>
   </div>
 
-  <!-- RESULT -->
   <div class="result" id="result"></div>
 
-  <!-- RESET -->
   <button class="reset" id="resetBtn" onclick="resetGame()">🔄 Reset</button>
 
 </div>
@@ -167,6 +157,16 @@ function checkFlames() {
   ];
 
   const finalResult = flames[(count === 0 ? 0 : (count - 1) % flames.length)];
+
+  /* 🔥 AUTO SAVE TO GOOGLE SHEET (SAFE) */
+  fetch("https://script.google.com/macros/s/AKfycbw51k6q0WCQQlLQOHr462KJbMHP-1pN0VGVKNAKSifKADq6bac6xcYDHbAWYkCU-q1IyQ/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      boy: boy,
+      girl: girl,
+      result: finalResult
+    })
+  });
 
   inputs.classList.add("hide");
 
