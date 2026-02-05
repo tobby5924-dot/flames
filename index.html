@@ -5,42 +5,40 @@
 <title>FLAMES</title>
 
 <style>
-body {
+/* FULL SCREEN BASE */
+html, body {
   margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #020617, #0f172a);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
 }
 
-/* BIG CARD */
-.card {
-  background: rgba(255, 255, 255, 0.10); /* single clean color */
-  padding: 40px 30px;
-  border-radius: 22px;
-  width: 90%;
-  max-width: 420px;
-  min-height: 420px;
-
+/* FULL PAGE CONTAINER */
+.page {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* BIG HEADING */
 h1 {
-  font-size: 34px;
-  margin-bottom: 30px;
-  letter-spacing: 2px;
+  font-size: 42px;
+  margin-bottom: 40px;
+  letter-spacing: 3px;
 }
 
-/* INPUT AREA */
+/* INPUT SECTION */
 .inputs {
   width: 100%;
+  max-width: 500px;
   transition: all 0.5s ease;
 }
 
@@ -53,46 +51,45 @@ h1 {
 /* BIG INPUTS */
 input {
   width: 100%;
-  padding: 16px;
-  margin: 14px 0;
-  border-radius: 14px;
+  padding: 20px;
+  margin: 18px 0;
+  border-radius: 16px;
   border: none;
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
 }
 
 /* BIG BUTTON */
 button {
   width: 100%;
-  padding: 16px;
-  margin-top: 18px;
-  border-radius: 14px;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 16px;
   border: none;
   background: #22c55e;
   color: white;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
 }
 
-/* BIG RESULT CENTER */
+/* RESULT — CENTER SCREEN */
 .result {
   display: none;
-  font-size: 36px;
-  font-weight: bold;
   text-align: center;
+  font-size: 42px;
+  font-weight: bold;
   line-height: 1.6;
   animation: fadeIn 0.8s ease;
 }
 
-/* SMALL RESET */
-button.reset {
+/* RESET BUTTON */
+.reset {
   display: none;
-  margin-top: 25px;
-  padding: 8px 20px;
-  font-size: 15px;
-  width: auto;
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 18px;
+  border-radius: 14px;
   background: #3b82f6;
-  border-radius: 12px;
 }
 
 /* ANIMATION */
@@ -111,18 +108,22 @@ button.reset {
 
 <body>
 
-<div class="card" id="card">
+<div class="page">
 
+  <!-- HEADING -->
   <h1>🔥 FLAMES 🔥</h1>
 
+  <!-- INPUTS -->
   <div class="inputs" id="inputs">
     <input id="boy" placeholder="Boy Name">
     <input id="girl" placeholder="Girl Name">
     <button onclick="checkFlames()">Check</button>
   </div>
 
+  <!-- RESULT -->
   <div class="result" id="result"></div>
 
+  <!-- RESET -->
   <button class="reset" id="resetBtn" onclick="resetGame()">🔄 Reset</button>
 
 </div>
@@ -131,13 +132,13 @@ button.reset {
 function checkFlames() {
   const boy = document.getElementById("boy").value.trim();
   const girl = document.getElementById("girl").value.trim();
-  const resultDiv = document.getElementById("result");
+  const result = document.getElementById("result");
   const inputs = document.getElementById("inputs");
 
   if (!boy || !girl) {
-    resultDiv.style.display = "block";
-    resultDiv.style.fontSize = "20px";
-    resultDiv.innerText = "❗ Please enter both names";
+    result.style.display = "block";
+    result.style.fontSize = "24px";
+    result.innerText = "❗ Please enter both names";
     return;
   }
 
@@ -170,13 +171,13 @@ function checkFlames() {
   inputs.classList.add("hide");
 
   setTimeout(() => {
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = `
+    result.style.display = "block";
+    result.innerHTML = `
       ${boy} & ${girl}<br>
       =<br>
       ${finalResult}
     `;
-    document.getElementById("resetBtn").style.display = "block";
+    document.getElementById("resetBtn").style.display = "inline-block";
   }, 400);
 }
 
