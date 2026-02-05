@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FLAMES</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Card becomes flex container */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 18px;
+  width: 330px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+/* Center mode (after result) */
+.card.center {
+  justify-content: center;
+}
+
+/* Heading */
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.inputs {
+  width: 100%;
+  transition: all 0.6s ease;
+}
+
+.inputs.hide {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Inputs */
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px auto;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  display: block;
+}
+
+button {
+  width: 90%;
+  padding: 12px;
+  margin: 12px auto 0;
+  border-radius: 10px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+}
+
+/* RESULT — TRUE CENTER */
+.result {
+  display: none;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.6;
+  animation: fadeUp 0.8s ease;
+}
+
+/* Reset */
+button.reset {
+  display: none;
+  margin-top: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  width: auto;
+  background: #3b82f6;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+
+  <h1>🔥 FLAMES 🔥</h1>
+
+  <div class="inputs" id="inputs">
+    <input id="boy" placeholder="Boy Name">
+    <input id="girl" placeholder="Girl Name">
+    <button onclick="checkFlames()">Check</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <button class="reset" id="resetBtn" onclick="resetGame()">🔄 Reset</button>
+
+</div>
+
+<script>
+function checkFlames() {
+  let boy = document.getElementById("boy").value.trim();
+  let girl = document.getElementById("girl").value.trim();
+  let resultDiv = document.getElementById("result");
+  let card = document.getElementById("card");
+
+  if (!boy || !girl) {
+    resultDiv.style.display = "block";
+    resultDiv.style.fontSize = "18px";
+    resultDiv.innerText = "❗ Please enter both names";
+    return;
+  }
+
+  let b = boy.toLowerCase().replace(/\s/g,"").split("");
+  let g = girl.toLowerCase().replace(/\s/g,"").split("");
+
+  for (let i = 0; i < b.length; i++) {
+    for (let j = 0; j < g.length; j++) {
+      if (b[i] === g[j]) {
+        b[i] = "";
+        g[j] = "";
+        break;
+      }
+    }
+  }
+
+  let count = b.join("").length + g.join("").length;
+
+  const flames = [
+    "Friends 🤝",
+    "Love ❤️",
+    "Affection 😊",
+    "Marriage 💍",
+    "Enemies 😡",
+    "Siblings 👨‍👩‍👧‍👦"
+  ];
+
+  let finalResult = flames[(count === 0 ? 0 : (count - 1) % flames.length)];
+
+  // SWITCH TO CENTER MODE
+  document.getElementById("inputs").classList.add("hide");
+  card.classList.add("center");
+
+  setTimeout(() => {
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `
+      ${boy} & ${girl}<br>
+      =<br>
+      ${finalResult}
+    `;
+    document.getElementById("resetBtn").style.display = "block";
+  }, 400);
+}
+
+function resetGame() {
+  document.getElementById("boy").value = "";
+  document.getElementById("girl").value = "";
+  document.getElementById("inputs").classList.remove("hide");
+  document.getElementById("result").style.display = "none";
+  document.getElementById("resetBtn").style.display = "none";
+  document.getElementById("card").classList.remove("center");
+}
+</script>
+
+</body>
+</html>
